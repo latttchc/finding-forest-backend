@@ -9,17 +9,20 @@ import (
 	"github.com/latttchc/finding-forest-backend/internal/services"
 )
 
+// CommentHandler はコメントに関するHTTPリクエストを処理するハンドラーです
 type CommentHandler struct {
 	commentService services.CommentService
 }
 
+// NewCommentHandler は新しい CommentHandler インスタンスを作成します
 func NewCommentHandler(commentService services.CommentService) *CommentHandler {
 	return &CommentHandler{
 		commentService: commentService,
 	}
 }
 
-// CreateComment は新しいコメントを作成します
+// CreateComment は新しいコメントを作成するHTTPハンドラーです
+// POST /api/comments
 func (h *CommentHandler) CreateComment(c echo.Context) error {
 	var req models.CommentCreateRequest
 
@@ -41,7 +44,8 @@ func (h *CommentHandler) CreateComment(c echo.Context) error {
 	return c.JSON(http.StatusCreated, response)
 }
 
-// GetCommentsByPostID は指定された投稿のコメント一覧を取得します
+// GetCommentsByPostID は指定された投稿のコメント一覧を取得するHTTPハンドラーです
+// GET /api/posts/:post_id/comments
 func (h *CommentHandler) GetCommentsByPostID(c echo.Context) error {
 	// パスパラメータからpost_idを取得
 	postIDStr := c.Param("post_id")

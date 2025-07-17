@@ -9,17 +9,20 @@ import (
 	"github.com/latttchc/finding-forest-backend/internal/services"
 )
 
+// PostHandler は投稿に関するHTTPリクエストを処理するハンドラーです
 type PostHandler struct {
 	postService services.PostService
 }
 
+// NewPostHandler は新しい PostHandler インスタンスを作成します
 func NewPostHandler(postService services.PostService) *PostHandler {
 	return &PostHandler{
 		postService: postService,
 	}
 }
 
-// CreatePost は新しい投稿を作成します
+// CreatePost は新しい投稿を作成するHTTPハンドラーです
+// POST /api/posts
 func (h *PostHandler) CreatePost(c echo.Context) error {
 	var req models.PostCreateRequest
 
@@ -41,7 +44,8 @@ func (h *PostHandler) CreatePost(c echo.Context) error {
 	return c.JSON(http.StatusCreated, response)
 }
 
-// GetPost は指定されたIDの投稿を取得します
+// GetPost は指定されたIDの投稿詳細を取得するHTTPハンドラーです
+// GET /api/posts/:id
 func (h *PostHandler) GetPost(c echo.Context) error {
 	// パスパラメータからIDを取得
 	idStr := c.Param("id")
@@ -63,7 +67,8 @@ func (h *PostHandler) GetPost(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-// GetPosts は投稿一覧を取得します
+// GetPosts は投稿一覧を取得するHTTPハンドラーです
+// GET /api/posts?page=1&limit=20&category=面接&company_name=Google
 func (h *PostHandler) GetPosts(c echo.Context) error {
 	// クエリパラメータを取得
 	pageStr := c.QueryParam("page")
