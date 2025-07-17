@@ -27,7 +27,7 @@ func (r *commentRepository) Create(comment *models.Comment) error {
 func (r *commentRepository) GetByPostID(postID uint) ([]models.Comment, error) {
 	var comments []models.Comment
 	err := r.db.Where("post_id = ?", postID).
-		Order("create_at DESC").
+		Order("created_at DESC").
 		Find(&comments).Error
 	return comments, err
 }
