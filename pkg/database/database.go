@@ -3,6 +3,7 @@ package database
 import (
 	"log"
 
+	"github.com/latttchc/finding-forest-backend/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -37,6 +38,14 @@ func Connect(dsn string) (*gorm.DB, error) {
 
 // Migrate はデータベースマイグレーションを実行する
 func Migrate(db *gorm.DB) error {
+	// model migrate
+	err := db.AutoMigrate(
+		&models.Post{},
+		&models.Comment{},
+	)
+	if err != nil {
+		return err
+	}
 
 	log.Println("Database migration completed")
 	return nil
